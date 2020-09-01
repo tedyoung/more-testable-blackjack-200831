@@ -17,8 +17,24 @@ public class Game {
   private final List<Card> playerHand = new ArrayList<>();
 
   public static void main(String[] args) {
-    Game game = new Game();
+    displayWelcome();
 
+    playGame();
+
+    resetScreen();
+  }
+
+  private static void playGame() {
+    Game game = new Game();
+    game.initialDeal();
+    game.play();
+  }
+
+  private static void resetScreen() {
+    System.out.println(ansi().reset());
+  }
+
+  private static void displayWelcome() {
     System.out.println(ansi()
                            .bgBright(Ansi.Color.WHITE)
                            .eraseScreen()
@@ -26,12 +42,6 @@ public class Game {
                            .fgGreen().a("Welcome to")
                            .fgRed().a(" Jitterted's")
                            .fgBlack().a(" BlackJack"));
-
-
-    game.initialDeal();
-    game.play();
-
-    System.out.println(ansi().reset());
   }
 
   public Game() {
@@ -39,12 +49,14 @@ public class Game {
   }
 
   public void initialDeal() {
-
-    // deal first round of cards, players first
-    playerHand.add(deck.draw());
-    dealerHand.add(deck.draw());
+    dealRoundToPlayerFirst();
 
     // deal next round of cards
+    dealRoundToPlayerFirst();
+  }
+
+  private void dealRoundToPlayerFirst() {
+    // deal first round of cards, players first
     playerHand.add(deck.draw());
     dealerHand.add(deck.draw());
   }
