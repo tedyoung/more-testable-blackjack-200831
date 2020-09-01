@@ -67,7 +67,7 @@ public class Game {
     while (!playerBusted) {
       displayGameState();
       String playerChoice = inputFromPlayer().toLowerCase();
-      if (playerChoice.startsWith("s")) {
+      if (isPlayerStanding(playerChoice)) {
         break;
       }
       if (playerChoice.startsWith("h")) {
@@ -100,6 +100,10 @@ public class Game {
     } else {
       System.out.println("You lost to the Dealer. 💸");
     }
+  }
+
+  private boolean isPlayerStanding(String playerChoice) {
+    return playerChoice.startsWith("s");
   }
 
   public int handValueOf(List<Card> hand) {
