@@ -69,7 +69,7 @@ public class Game {
       }
       if (playerChoice.startsWith("h")) {
         playerHand.add(deck.draw());
-        if (playerHand.value() > 21) {
+        if (playerHand.isBusted()) {
           playerBusted = true;
         }
       } else {
@@ -79,7 +79,7 @@ public class Game {
 
     // Dealer makes its choice automatically based on a simple heuristic (<=16, hit, 17>stand)
     if (!playerBusted) {
-      while (dealerHand.value() <= 16) {
+      while (dealerHand.value() <= 16) { // TODO: dealerHand.isValueLessThan(17)
         dealerHand.add(deck.draw());
       }
     }
@@ -88,11 +88,11 @@ public class Game {
 
     if (playerBusted) {
       System.out.println("You Busted, so you lose.  💸");
-    } else if (dealerHand.value() > 21) {
+    } else if (dealerHand.isBusted()) {
       System.out.println("Dealer went BUST, Player wins! Yay for you!! 💵");
-    } else if (dealerHand.value() < playerHand.value()) {
+    } else if (playerHand.beats(dealerHand)) {
       System.out.println("You beat the Dealer! 💵");
-    } else if (dealerHand.value() == playerHand.value()) {
+    } else if (playerHand.pushesWith(dealerHand)) {
       System.out.println("Push: The house wins, you Lose. 💸");
     } else {
       System.out.println("You lost to the Dealer. 💸");

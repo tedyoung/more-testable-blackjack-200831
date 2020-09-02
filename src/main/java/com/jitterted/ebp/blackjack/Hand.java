@@ -10,6 +10,10 @@ public class Hand {
 
   private final List<Card> cards = new ArrayList<>();
 
+  public boolean isBusted() {
+    return value() > 21;
+  }
+
   public void add(Card card) {
     cards.add(card);
   }
@@ -43,5 +47,13 @@ public class Hand {
 
   public String displayFirstCard() {
     return cards.get(0).display();
+  }
+
+  public boolean beats(Hand dealerHand) {
+    return dealerHand.value() < value();
+  }
+
+  public boolean pushesWith(Hand hand) {
+    return hand.value() == value();
   }
 }
