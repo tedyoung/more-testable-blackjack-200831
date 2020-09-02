@@ -2,8 +2,6 @@ package com.jitterted.ebp.blackjack;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.*;
 
 public class HandValueAceTest {
@@ -12,23 +10,42 @@ public class HandValueAceTest {
 
   @Test
   public void handWithOneAceTwoCardsIsValuedAt11() throws Exception {
-    Game game = new Game();
-    var hand = List.of(new Card(DUMMY_SUIT, "A"),
-                       new Card(DUMMY_SUIT, "5"));
+    Hand hand = createHandWithRanksOf("A", "5");
 
-    assertThat(game.handValueOf(hand))
+    assertThat(hand.value())
         .isEqualTo(11 + 5);
   }
 
   @Test
-  public void handWithOneAceAndOtherCardsEqualTo11IsValuedAt1() throws Exception {
-    Game game = new Game();
-    var hand = List.of(new Card(DUMMY_SUIT, "A"),
-                       new Card(DUMMY_SUIT, "8"),
-                       new Card(DUMMY_SUIT, "3"));
+  public void handWithOneAceRestOfCardsEqualTo10ThenAceIsValueAt11() throws Exception {
+    Hand hand = createHandWithRanksOf("A", "10");
 
-    assertThat(game.handValueOf(hand))
+    assertThat(hand.value())
+        .isEqualTo(11 + 10);
+  }
+
+  @Test
+  public void handWithOneAceAndOtherCardsEqualTo11IsValuedAt1() throws Exception {
+    Hand hand = createHandWithRanksOf("A", "8", "3");
+
+    assertThat(hand.value())
         .isEqualTo(1 + 8 + 3);
+  }
+
+  @Test
+  public void handWithOneAceAndOtherCardsEqualTo12IsValuedAt1() throws Exception {
+    Hand hand = createHandWithRanksOf("7", "5", "A");
+
+    assertThat(hand.value())
+        .isEqualTo(7 + 5 + 1);
+  }
+
+  private Hand createHandWithRanksOf(String... ranks) {
+    Hand hand = new Hand();
+    for (String rank : ranks) {
+      hand.add(new Card(DUMMY_SUIT, rank));
+    }
+    return hand;
   }
 
 }
