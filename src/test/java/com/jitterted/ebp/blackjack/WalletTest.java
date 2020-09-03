@@ -53,4 +53,28 @@ public class WalletTest {
     assertThat(wallet.balance())
         .isEqualTo(8 + 12);
   }
+
+  @Test
+  public void walletWith20BalanceWhenBet5DollarsIs15DollarBalance() throws Exception {
+    Wallet wallet = new Wallet();
+    wallet.addMoney(20);
+
+    wallet.bet(5);
+
+    assertThat(wallet.balance())
+        .isEqualTo(20 - 5);
+  }
+
+  @Test
+  public void walletWith11BalanceWhenBet3AndBet5Is3DollarBalance() throws Exception {
+    Wallet wallet = new Wallet();
+    wallet.addMoney(11);
+
+    wallet.bet(3);
+    wallet.bet(5);
+
+    assertThat(wallet.balance())
+        .isEqualTo(11 - 3 - 5);
+  }
+
 }
