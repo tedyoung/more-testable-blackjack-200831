@@ -12,6 +12,8 @@ public class Game {
 
   private final Hand dealerHand = new Hand();
   private final Hand playerHand = new Hand();
+  private int playerBalance = 100;
+  private int playerBet = 0;
 
   public static void main(String[] args) {
     displayWelcome();
@@ -149,4 +151,28 @@ public class Game {
     System.out.println(" (" + playerHand.value() + ")");
   }
 
+  public int playerBalance() {
+    return playerBalance;
+  }
+
+  public void playerBets(int betAmount) {
+    playerBalance -= betAmount;
+    playerBet = betAmount;
+  }
+
+  public void playerWins() {
+    playerBalance += playerBet * 2;
+  }
+
+  public void playerPushes() {
+    playerBalance += playerBet * 1;
+  }
+
+  public void playerLoses() {
+    playerBalance += playerBet * 0;
+  }
+
+  public void playerWinsBlackjack() {
+    playerBalance += playerBet * 2.5;
+  }
 }
